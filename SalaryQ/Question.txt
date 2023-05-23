@@ -1,0 +1,4 @@
+Write a PL/SQL program that prompts for an employee's code and checks whether an employee's salary 
+is greater than the average of all the employee’s salaries. If the salary is greater than the average, the 
+program should raise a bonus_not_allowed exception. Otherwise, the program should print the message 
+'The bonus will be added'. Make sure that the program handles all possible exceptions.

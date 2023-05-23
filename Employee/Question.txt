@@ -1,0 +1,9 @@
+1.Create the emp_table below and add the data as shown (/5 Marks)
+
+2.Write a PLSQL package that inserts a new record in the emp_table table provided below. 
+The package should print:
+    -the number of records (employees) before the new record was added, 
+    -the details of the new employee record added, 
+    and the new number of employees after the record has been added.
+
+3.Write the main PLSQL block to call the created package

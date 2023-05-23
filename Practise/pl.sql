@@ -1,0 +1,51 @@
+CREATE TABLE EMP_TABLE(
+    EMP_CODE CHAR(4),
+    EMP_FIRST_NAME VARCHAR(30),
+    EMP_LAST_NAME VARCHAR(30),
+    EMP_SALARY NUMBER,
+    EMP_ADDRESS VARCHAR(30)
+);
+
+INSERT INTO EMP_TABLE VALUES ('E001', 'Richard', 'Cipher', 245000, 'Rwanda');
+INSERT INTO EMP_TABLE VALUES ('E002', 'John', 'Wick', 345000, 'Burundi');
+INSERT INTO EMP_TABLE VALUES ('E003', 'Anna', 'Frank', 123400, 'Kenya');
+INSERT INTO EMP_TABLE VALUES ('E004', 'Louise', 'Newton', 768900, 'Uganda');
+INSERT INTO EMP_TABLE VALUES ('E005', 'Marie', 'Currie', 678900, 'Tanzanie');
+
+PACKAGE SPECIFICAITON
+CREATE OR REPLACE PACKAGE EMP_DETAILS AS
+PROCEDURE SET_RECORD(p_emp_rec EMP_TABLE%ROWTYPE);
+FUNCTION GET_RECORD(P_EMP_NO EMP_TABLE.EMP_CODE%TYPE) RETURN EMP_TABLE%ROWTYPE;
+END EMP_DETAILS;
+
+CREATE OR REPLACE PACKAGE BODY EMP_DETAILS IS 
+
+PROCEDURE SET_RECORD(p_emp_rec EMP_TABLE%ROWTYPE) 
+IS
+COUNTER NUMBER; 
+begin
+  SELECT COUNT(*) INTO COUNTER FROM EMP_TABLE;
+  DBMS_OUTPUT.PUT_LINE('There are already '||counter||' in Employee Table');
+
+  INSERT INTO EMP_TABLE VALUES (p_emp_rec.EMP_CODE, 
+                                p_emp_rec.EMP_FIRST_NAME, 
+                                p_emp_rec.EMP_LAST_NAME, 
+                                p_emp_rec.EMP_SALARY, 
+                                p_emp_rec.EMP_ADDRESS);
+
+    dbms_output.put_line('The Employee: '||p_emp_rec.EMP_FIRST_NAME||' '||p_emp_rec.EMP_LAST_NAME||' with '||p_emp_rec.EMP_CODE||' Code has been added');
+
+  SELECT COUNT(*) INTO COUNTER FROM EMP_TABLE;
+  DBMS_OUTPUT.PUT_LINE('There are already '||counter||' in Employee Table'); 
+end SET_RECORD;
+
+FUNCTION GET_RECORD(P_EMP_NO EMP_TABLE.EMP_CODE%TYPE) RETURN EMP_TABLE%ROWTYPE
+IS
+EMP_D EMP_TABLE%ROWTYPE;
+begin
+SELECT * INTO EMP_D FROM EMP_TABLE WHERE EMP_CODE = P_EMP_NO;
+RETURN EMP_D; 
+end GET_RECORD;
+
+END EMP_DETAILS;
+
